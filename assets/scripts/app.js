@@ -3,25 +3,43 @@ class Product {
   imageUrl;
   description;
   price;
+
+  constructor(title, image, desc, price) {
+    this.title = title;
+    this.imageUrl = image;
+    this.description = desc;
+    this.price = price;
+  }
 }
-console.log(new Product)
+
 const productList = {
   products: [
-    // new Product()
-    {
-      title: "A Pillow",
-      imageUrl:
-        "https://th.bing.com/th/id/OIP.uxPz9GU--6WQ-tpJFo7MlQHaHZ?pid=ImgDet&rs=1",
-      price: 19.99,
-      description: "A soft pillow",
-    },
-    {
-      title: "A Carpet",
-      imageUrl:
-        "https://th.bing.com/th/id/R.957946297cca292a3aeff2eedf19aeb3?rik=T%2fD6n7fqwcS6nA&pid=ImgRaw&r=0",
-      price: 19.99,
-      description: "A carpet which you may like or not",
-    },
+    new Product(
+      "A Pillow",
+      "https://th.bing.com/th/id/OIP.uxPz9GU--6WQ-tpJFo7MlQHaHZ?pid=ImgDet&rs=1",
+      "A soft pillow",
+      19.99
+    ),
+    new Product(
+      "A Carpet",
+      "https://th.bing.com/th/id/R.957946297cca292a3aeff2eedf19aeb3?rik=T%2fD6n7fqwcS6nA&pid=ImgRaw&r=0",
+      "A carpet which you may like or not",
+      89.99
+    ),
+    // {
+    //   title: "A Pillow",
+    //   imageUrl:
+    //     "https://th.bing.com/th/id/OIP.uxPz9GU--6WQ-tpJFo7MlQHaHZ?pid=ImgDet&rs=1",
+    //   price: 19.99,
+    //   description: "A soft pillow",
+    // },
+    // {
+    //   title: "A Carpet",
+    //   imageUrl:
+    //     "https://th.bing.com/th/id/R.957946297cca292a3aeff2eedf19aeb3?rik=T%2fD6n7fqwcS6nA&pid=ImgRaw&r=0",
+    //   price: 89.99,
+    //   description: "A carpet which you may like or not",
+    // },
   ],
   render() {
     const renderHook = document.getElementById("app");
