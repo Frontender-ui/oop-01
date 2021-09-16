@@ -13,11 +13,24 @@ class Product {
 }
 
 class ShoppingCart {
-  item = [];
+  items = [];
+
+  set cartItems(val) {
+    this.items = val;
+    this.totalOutput.innerHTML = `<h2>Total: \$${this.totalAmount.toFixed(
+      2
+    )}</h2>`;
+  }
+
+  get totalAmount() {
+    const sum = this.items.reduce((acc, cur) => acc + cur.price, 0);
+    return sum;
+  }
 
   addProduct(product) {
-    this.item.push(product);
-    this.totalOutput.innerHTML = `<h2>Total: \$${1}</h2>`;
+    const updatedItems = [...this.items];
+    updatedItems.push(product);
+    this.cartItems = updatedItems;
   }
   render() {
     const cartEl = document.createElement("section");
@@ -36,7 +49,7 @@ class ProductItem {
   }
 
   addToCart() {
-    App.addProductToCart(this.product)
+    App.addProductToCart(this.product);
   }
 
   render() {
@@ -103,8 +116,6 @@ class Shop {
 }
 
 class App {
-  
-  
   static init() {
     const shop = new Shop();
     shop.render();
