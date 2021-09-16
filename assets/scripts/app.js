@@ -14,7 +14,11 @@ class Product {
 
 class ShoppingCart {
   item = [];
-
+  
+  addProduct(product){
+    this.item.push(product)
+    this.totalOutput = `<h2>Total: \$${1}</h2>`
+  }
   render() {
     const cartEl = document.createElement("section");
     cartEl.innerHTML = `
@@ -22,6 +26,7 @@ class ShoppingCart {
     <button>Order New!</button>
     `;
     cartEl.className = "cart";
+    this.totalOutput = cartEl.querySelector('h2')
     return cartEl;
   }
 }
