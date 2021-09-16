@@ -12,13 +12,26 @@ class Product {
   }
 }
 
+class ShoppingCart {
+  item = [];
+
+  render() {
+    const cartEl = document.createElement("section");
+    cartEl.innerHTML = `
+    <h2>Total: \$${0}</h2>
+    <button>Order New!</button>
+    `;
+    cartEl.className = "cart";
+    return cartEl;
+  }
+}
 class ProductItem {
   constructor(product) {
     this.product = product;
   }
 
   addToCart() {
-    console.log('Adding product to cart...',this.product)
+    console.log("Adding product to cart...", this.product);
   }
 
   render() {
@@ -35,8 +48,8 @@ class ProductItem {
         </div>
         </div>
         `;
-        const addCartBtn = prodEl.querySelector('button');
-        addCartBtn.addEventListener('click',this.addToCart.bind(this))
+    const addCartBtn = prodEl.querySelector("button");
+    addCartBtn.addEventListener("click", this.addToCart.bind(this));
     return prodEl;
   }
 }
@@ -60,16 +73,29 @@ class ProductList {
   constructor() {}
 
   render() {
-    const renderHook = document.getElementById("app");
     const prodList = document.createElement("ul");
     prodList.className = "product-list";
     for (const prod of this.products) {
-      const productItem = new ProductItem(prod)
+      const productItem = new ProductItem(prod);
       prodList.append(productItem.render());
     }
-    renderHook.append(prodList);
+    return prodList;
   }
 }
 
-const productList = new ProductList();
-productList.render();
+class Shop {
+  render() {
+    const renderHook = document.getElementById("app");
+
+    const cart = new ShoppingCart();
+    const cartEl = cart.render();
+    const productList = new ProductList();
+    const prodListEL = productList.render();
+
+    renderHook.append(cartEl);
+    renderHook.append(prodListEL);
+  }
+}
+
+const shop = new Shop();
+shop.render();
