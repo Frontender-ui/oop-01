@@ -1,8 +1,8 @@
 class Product {
-  title = "DEFAULT";
-  imageUrl;
-  description;
-  price;
+  // title = "DEFAULT";
+  // imageUrl;
+  // description;
+  // price;
 
   constructor(title, image, desc, price) {
     this.title = title;
@@ -12,8 +12,31 @@ class Product {
   }
 }
 
-const productList = {
-  products: [
+class ProductItem {
+  constructor(product) {
+    this.product = product;
+  }
+
+  render() {
+    const prodEl = document.createElement("li");
+    prodEl.className = "product-item";
+    prodEl.innerHTML = `
+        <div>
+        <img src="${this.product.imageUrl}" alt="${this.product.title}">
+        <div class="product-item__content">
+        <h2>${this.product.title}</h2>
+        <h3>\$${this.product.price}</h3>
+        <p>${this.product.description}</p>
+        <button>Add to Cart</button>
+        </div>
+        </div>
+        `;
+    return prodEl;
+  }
+}
+
+class ProductList {
+  products = [
     new Product(
       "A Pillow",
       "https://th.bing.com/th/id/OIP.uxPz9GU--6WQ-tpJFo7MlQHaHZ?pid=ImgDet&rs=1",
@@ -26,43 +49,21 @@ const productList = {
       "A carpet which you may like or not",
       89.99
     ),
-    // {
-    //   title: "A Pillow",
-    //   imageUrl:
-    //     "https://th.bing.com/th/id/OIP.uxPz9GU--6WQ-tpJFo7MlQHaHZ?pid=ImgDet&rs=1",
-    //   price: 19.99,
-    //   description: "A soft pillow",
-    // },
-    // {
-    //   title: "A Carpet",
-    //   imageUrl:
-    //     "https://th.bing.com/th/id/R.957946297cca292a3aeff2eedf19aeb3?rik=T%2fD6n7fqwcS6nA&pid=ImgRaw&r=0",
-    //   price: 89.99,
-    //   description: "A carpet which you may like or not",
-    // },
-  ],
+  ];
+
+  constructor() {}
+
   render() {
     const renderHook = document.getElementById("app");
     const prodList = document.createElement("ul");
     prodList.className = "product-list";
     for (const prod of this.products) {
-      const prodEl = document.createElement("li");
-      prodEl.className = "product-item";
-      prodEl.innerHTML = `
-          <div>
-          <img src="${prod.imageUrl}" alt="${prod.title}">
-          <div class="product-item__content">
-          <h2>${prod.title}</h2>
-          <h3>\$${prod.price}</h3>
-          <p>${prod.description}</p>
-          <button>Add to Cart</button>
-          </div>
-          </div>
-          `;
-      prodList.append(prodEl);
+      const productItem = new ProductItem(prod)
+      prodList.append(productItem.render());
     }
     renderHook.append(prodList);
-  },
-};
+  }
+}
 
+const productList = new ProductList();
 productList.render();
