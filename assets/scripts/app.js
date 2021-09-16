@@ -20,9 +20,12 @@ class ElementAttribute {
 }
 
 class Component {
-  constructor(renderHookId) {
+  constructor(renderHookId,shouldRender = true) {
     this.hookId = renderHookId;
-    this.render();
+    if(shouldRender){
+      this.render();
+    }
+
   }
 
   render() {}
@@ -77,8 +80,9 @@ class ShoppingCart extends Component {
 }
 class ProductItem extends Component {
   constructor(product, renderHookId) {
-    super(renderHookId);
+    super(renderHookId,false);
     this.product = product;
+    this.render()
   }
 
   addToCart() {
@@ -104,31 +108,44 @@ class ProductItem extends Component {
 }
 
 class ProductList extends Component {
-  products = [
-    new Product(
-      "A Pillow",
-      "https://th.bing.com/th/id/OIP.uxPz9GU--6WQ-tpJFo7MlQHaHZ?pid=ImgDet&rs=1",
-      "A soft pillow",
-      19.99
-    ),
-    new Product(
-      "A Carpet",
-      "https://th.bing.com/th/id/R.957946297cca292a3aeff2eedf19aeb3?rik=T%2fD6n7fqwcS6nA&pid=ImgRaw&r=0",
-      "A carpet which you may like or not",
-      89.99
-    ),
-  ];
+  products = [];
 
   constructor(renderHookId) {
     super(renderHookId);
+    this.fetchProducts();
+  }
+
+  fetchProducts() {
+    this.products = [
+      new Product(
+        "A Pillow",
+        "https://th.bing.com/th/id/OIP.uxPz9GU--6WQ-tpJFo7MlQHaHZ?pid=ImgDet&rs=1",
+        "A soft pillow",
+        19.99
+      ),
+      new Product(
+        "A Carpet",
+        "https://th.bing.com/th/id/R.957946297cca292a3aeff2eedf19aeb3?rik=T%2fD6n7fqwcS6nA&pid=ImgRaw&r=0",
+        "A carpet which you may like or not",
+        89.99
+      ),
+    ];
+    this.renderProducts()
+  }
+
+
+  renderProducts() {
+    for (const prod of this.products) {
+      new ProductItem(prod, "prod-list");
+    }
   }
 
   render() {
     const prodList = this.createRootElement("ul", "product-list", [
       new ElementAttribute("id", "prod-list"),
     ]);
-    for (const prod of this.products) {
-      new ProductItem(prod, "prod-list");
+    if(this.products && this.products.length > 0){
+      this.renderProducts()
     }
   }
 }
